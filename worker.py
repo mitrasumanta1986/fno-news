@@ -79,17 +79,24 @@ def _intraday_tick() -> None:
         tasks.run_intraday_technical_job()
 
 
-def run_scheduler() -> None:
-    if _stale("universe_refreshed_at", 20):
-        tasks.run_universe_job()
+def _startup_catch_up() -> None:
+    """Runs inside the scheduler so news/intraday ticks start immediately instead of waiting
+    for a slow backfill (matters on a fresh cloud instance with an empty database)."""
     if _stale("prices_refreshed_at", 24) or _eod_behind():
         tasks.run_prices_job()
     if _stale("fundamentals_refreshed_at", 24):
         tasks.run_fundamentals_job()
 
+
+def run_scheduler() -> None:
+    if _stale("universe_refreshed_at", 20):
+        tasks.run_universe_job()
+
     refresh = int(load_yaml("technical.yaml").get("intraday", {}).get("refresh_minutes", 5))
     scheduler = BlockingScheduler(timezone=IST, job_defaults={"coalesce": True, "max_instances": 1, "misfire_grace_time": 300})
-    scheduler.add_job(tasks.run_news_job, IntervalTrigger(minutes=1), id="news_tick", name="news (due sources)")
+    scheduler.add_job(_startup_catch_up, id="startup_catch_up", next_run_time=now_utc())
+    scheduler.add_job(tasks.run_news_job, IntervalTrigger(minutes=1), id="news_tick", name="news (due sources)",
+                      next_run_time=now_utc())
     scheduler.add_job(_intraday_tick, IntervalTrigger(minutes=refresh), id="technical_intraday")
     scheduler.add_job(tasks.run_universe_job, CronTrigger(hour=8, minute=0), id="universe")
     scheduler.add_job(tasks.run_prices_job, CronTrigger(day_of_week="mon-fri", hour="18,20,22", minute=45), id="prices")
