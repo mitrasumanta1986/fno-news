@@ -1,0 +1,28 @@
+F&O NEWS DASHBOARD - PORTABLE
+=============================
+
+Python and all packages are already inside this folder (python\).
+You do NOT need to install Python on this PC.
+
+SETUP (one time)
+1. Extract the whole zip to a fixed place, e.g.  D:\FnO-News
+   (Do not run it from inside the zip. Do not move the folder after step 2,
+    or run step 2 again after moving it.)
+2. Double-click  "Create Desktop Shortcut.bat"
+   Two icons appear on the Desktop:
+     - F&O News Dashboard   -> starts everything and opens the browser
+     - Stop F&O News        -> stops the worker and the dashboard
+3. Optional: open .env in Notepad and set CONTACT_EMAIL to your email.
+
+DAILY USE
+- Double-click "F&O News Dashboard" on the Desktop.
+  Two black windows open (Worker + Dashboard) - leave them open.
+  The browser opens http://localhost:8501
+- If Windows Firewall asks about python.exe, click "Allow".
+- To stop: double-click "Stop F&O News" (or close the two black windows).
+
+NOTES
+- Needs internet (news, NSE and Yahoo data).
+- Windows 10/11, 64-bit only.
+- The database (data\app.db) is copied with the data as of the packing date;
+  the worker catches up automatically on first start.

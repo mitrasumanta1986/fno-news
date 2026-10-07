@@ -1,0 +1,24 @@
+# Technical screen settings. The screen reports indicator CONDITIONS only; it is not a
+# buy/sell recommendation.
+rsi:
+  period: 14
+  bullish_above: 60
+  bearish_below: 40
+adx:
+  period: 14
+  min_trend_strength: 25
+supertrend:
+  period: 10
+  multiplier: 3
+ema:
+  period: 20
+
+# Intraday (5-minute) bars. NSE does not publish free intraday candles; the only provider
+# implemented is Yahoo Finance via the unofficial `yfinance` library (delayed, personal use).
+# Set provider: none to disable intraday and use only the daily screen from NSE EOD data.
+intraday:
+  provider: yfinance
+  interval: 5m
+  period: 5d
+  batch_size: 50
+  refresh_minutes: 5

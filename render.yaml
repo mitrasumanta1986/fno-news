@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: fno-news
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash start.sh
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.6
+      - key: PYTHONUTF8
+        value: "1"
+      - key: DB_PATH
+        value: data/app.db
+      - key: CONTACT_EMAIL
+        sync: false
+      - key: AI_ENABLED
+        value: "false"
+      - key: ANTHROPIC_API_KEY
+        sync: false

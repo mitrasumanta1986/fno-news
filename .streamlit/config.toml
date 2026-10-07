@@ -1,0 +1,10 @@
+[theme]
+primaryColor = "#2a78d6"
+
+[server]
+# Local-only by default. Do not expose this app on a public network without adding authentication.
+address = "localhost"
+headless = true
+
+[browser]
+gatherUsageStats = false

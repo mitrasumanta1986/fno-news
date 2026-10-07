@@ -1,0 +1,149 @@
+# Source registry. Every source is isolated: one failing source never stops the others.
+#
+# type:        rss | news_sitemap | nse_announcements
+# enabled:     false keeps the source visible on the Source Status page but never fetches it
+# interval_minutes: base interval during market hours (08:00-16:00 IST, Mon-Fri); 3x outside
+# tos_checked: date the source's access route / robots.txt was last reviewed by a human
+#
+# robots.txt is re-checked automatically before every fetch.
+
+sources:
+  - name: Economic Times - Markets
+    type: rss
+    publisher: The Economic Times
+    domain: economictimes.indiatimes.com
+    enabled: true
+    interval_minutes: 10
+    tos_checked: 2026-09-28
+    feeds:
+      - https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms
+      - https://economictimes.indiatimes.com/markets/stocks/rssfeeds/2146842.cms
+
+  - name: Economic Times - Recos
+    type: rss
+    publisher: The Economic Times
+    domain: economictimes.indiatimes.com
+    enabled: true
+    interval_minutes: 15
+    tos_checked: 2026-09-28
+    feeds:
+      - https://economictimes.indiatimes.com/rssfeeds/3053611.cms
+
+  - name: Moneycontrol
+    type: news_sitemap
+    publisher: Moneycontrol
+    domain: www.moneycontrol.com
+    enabled: true
+    interval_minutes: 10
+    tos_checked: 2026-09-28
+    notes: >-
+      Moneycontrol's RSS feeds are stale (last items 2024) or return 5xx, so the Google-News
+      sitemap declared in their robots.txt is used instead (headline, date and URL only).
+    feeds:
+      - https://www.moneycontrol.com/news/news-sitemap.xml
+    options:
+      include_url_patterns: ["/news/business/"]
+      max_age_hours: 72
+
+  - name: CNBC-TV18
+    type: rss
+    publisher: CNBC-TV18
+    domain: www.cnbctv18.com
+    enabled: true
+    interval_minutes: 10
+    tos_checked: 2026-09-28
+    feeds:
+      - https://www.cnbctv18.com/commonfeeds/v1/cne/rss/market.xml
+      - https://www.cnbctv18.com/commonfeeds/v1/cne/rss/business.xml
+
+  - name: NDTV Profit
+    type: rss
+    publisher: NDTV Profit
+    domain: feeds.feedburner.com
+    enabled: true
+    interval_minutes: 15
+    tos_checked: 2026-09-28
+    notes: Publisher's own FeedBurner feed (ndtvprofit.com itself returns 403 to automated clients).
+    feeds:
+      - https://feeds.feedburner.com/ndtvprofit-latest
+
+  - name: Business Standard - Markets
+    type: rss
+    publisher: Business Standard
+    domain: www.business-standard.com
+    enabled: true
+    interval_minutes: 15
+    tos_checked: 2026-09-28
+    feeds:
+      - https://www.business-standard.com/rss/markets-106.rss
+
+  - name: Mint - Markets
+    type: rss
+    publisher: Mint
+    domain: www.livemint.com
+    enabled: true
+    interval_minutes: 15
+    tos_checked: 2026-09-28
+    feeds:
+      - https://www.livemint.com/rss/markets
+
+  - name: NSE Corporate Announcements
+    type: nse_announcements
+    publisher: NSE
+    domain: nsearchives.nseindia.com
+    enabled: true
+    interval_minutes: 10
+    is_original_publisher: true
+    tos_checked: 2026-09-28
+    feeds:
+      - https://nsearchives.nseindia.com/content/RSS/Online_announcements.xml
+    options:
+      ignore_subjects:
+        - trading window
+        - loss of share certificate
+        - duplicate share certificate
+        - copy of newspaper publication
+        - newspaper publication
+        - certificate under sebi (depositories and participants)
+        - reg. 74 (5)
+        - statement of investor complaints
+        - change in rta
+
+  # ---- Requested but not fetchable within robots/terms (kept visible on the status page) ----
+  - name: Zee Business
+    type: rss
+    publisher: Zee Business
+    domain: www.zeebiz.com
+    enabled: false
+    tos_checked: 2026-09-28
+    notes: >-
+      zeebiz.com returns HTTP 403 to automated clients for every URL including robots.txt and
+      sitemaps. Access controls are not bypassed. Re-enable if the publisher offers a feed/API.
+    feeds: []
+
+  - name: Financial Express
+    type: rss
+    publisher: Financial Express
+    domain: www.financialexpress.com
+    enabled: false
+    tos_checked: 2026-09-28
+    notes: Publisher has disabled its RSS feeds (HTTP 410 "Feeds have been disabled").
+    feeds: []
+
+  - name: Reuters
+    type: rss
+    publisher: Reuters
+    domain: www.reuters.com
+    enabled: false
+    tos_checked: 2026-09-28
+    notes: No public RSS since 2020; requires a licensed Reuters API.
+    feeds: []
+
+  - name: Investing.com
+    type: rss
+    publisher: Investing.com
+    domain: in.investing.com
+    enabled: false
+    tos_checked: 2026-09-28
+    notes: Terms of use prohibit automated collection; not used.
+    feeds: []

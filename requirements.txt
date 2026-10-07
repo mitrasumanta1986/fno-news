@@ -1,0 +1,17 @@
+streamlit==1.64.0
+pandas==3.0.6
+requests==2.34.2
+feedparser==6.0.14
+beautifulsoup4==4.15.0
+RapidFuzz==3.14.6
+APScheduler==3.11.3
+python-dotenv==1.2.3
+PyYAML==6.0.3
+tzdata==2026.4
+
+# Intraday (5-minute) bars for the technical screen. Unofficial Yahoo Finance client;
+# remove it and set intraday.provider: none in config/technical.yaml to disable.
+yfinance==1.7.0
+
+# Optional: only needed when AI_ENABLED=true
+# anthropic

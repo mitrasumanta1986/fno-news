@@ -1,0 +1,106 @@
+# Recommendation wording -> normalized action.
+# The original wording is ALWAYS stored alongside the normalized value.
+# Anything not listed normalizes to UNMAPPED (shown, but excluded from summary counts).
+actions:
+  BUY:
+    - strong buy
+    - conviction buy
+    - high conviction buy
+    - buy on dips
+    - buy
+    - outperform
+    - overweight
+    - positive
+    - top pick
+    - long
+  ACCUMULATE:
+    - accumulate
+    - add
+  HOLD:
+    - hold
+  NEUTRAL:
+    - neutral
+    - market perform
+    - market-perform
+    - sector perform
+    - equal-weight
+    - equal weight
+    - equalweight
+    - in-line
+    - inline
+    - marketweight
+    - market weight
+    - peer perform
+  REDUCE:
+    - reduce
+    - trim
+    - lighten
+  SELL:
+    - strong sell
+    - sell
+    - underperform
+    - underweight
+    - negative
+    - short
+    - exit
+
+# Terms that are too ambiguous in ordinary prose. They are only accepted as a rating when
+# quoted ('Positive') or followed by rating/call/stance ("positive stance").
+weak_terms:
+  - positive
+  - negative
+  - long
+  - short
+  - exit
+  - trim
+  - lighten
+  - top pick
+  - add
+  - inline
+
+# Time horizon phrases. Only explicitly published horizons are recorded; nothing is inferred.
+horizons:
+  INTRADAY:
+    - intraday
+    - intra-day
+    - for the day
+  SHORT:
+    - short term
+    - short-term
+    - near term
+    - near-term
+    - btst
+    - positional
+    - swing
+    - 1 week
+    - one week
+    - 2 weeks
+    - two weeks
+    - 2-3 weeks
+    - 3-4 weeks
+    - few weeks
+    - 1 month
+    - one month
+  MEDIUM:
+    - medium term
+    - medium-term
+    - 3 months
+    - three months
+    - 3-6 months
+    - 6 months
+    - six months
+    - 6-9 months
+    - 9 months
+  LONG:
+    - long term
+    - long-term
+    - 12 months
+    - 12-month
+    - twelve months
+    - 1 year
+    - one year
+    - one-year
+    - 1-year
+    - 18 months
+    - 2 years
+    - two years
