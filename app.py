@@ -70,10 +70,24 @@ page = st.navigation({
     "Tools": [nav.PAGES[k] for k in ("search", "watch", "status")],
 })
 
-with st.sidebar:
+@st.fragment(run_every="300s")
+def _live_status() -> None:
+    """Every 5 minutes: show the latest collection times and, when the worker has stored new data
+    since this page was drawn, redraw the whole page so every view (News, Recommendations, ...) is current."""
+    q.app_state.clear()
     state = q.app_state()
     st.caption(f"News refreshed: {fmt.ist(state.get('news_refreshed_at'))}")
     st.caption(f"EOD data: {fmt.ist(state.get('prices_refreshed_at'))}")
+    stamp = (state.get("news_refreshed_at"), state.get("prices_refreshed_at"))
+    seen = st.session_state.get("_data_stamp")
+    st.session_state["_data_stamp"] = stamp
+    if seen is not None and seen != stamp:
+        q.clear_caches()
+        st.rerun(scope="app")
+
+
+with st.sidebar:
+    _live_status()
     job = st.selectbox("Refresh now", ["news", "technical", "market", "prices", "fundamentals", "universe"],
                        label_visibility="collapsed",
                        format_func={"news": "News & recommendations", "technical": "Intraday bars & technicals",
